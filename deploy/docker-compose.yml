@@ -1,0 +1,28 @@
+# The portfolio on the shared Hetzner server (see README › Deployment).
+#
+# Run from /opt/portfolio (scripts/deploy.sh does this):
+#   docker compose -p portfolio -f app/deploy/docker-compose.yml --env-file .env up -d --build
+#
+# The server's Caddy belongs to the "scout" project and owns ports 80/443.
+# The app joins scout's network as "portfolio-app" so that Caddy can reach it.
+# The service is not called "app": Operon's already is, and service names are
+# DNS names on that shared network.
+
+services:
+  portfolio:
+    build: ..
+    restart: unless-stopped
+    env_file: ../../.env
+    volumes:
+      - data:/data
+    networks:
+      edge:
+        aliases: [portfolio-app]
+
+volumes:
+  data:
+
+networks:
+  edge:
+    external: true
+    name: deploy_default

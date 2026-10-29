@@ -1,0 +1,18 @@
+/node_modules
+/.next/
+/out/
+/build
+/coverage
+.DS_Store
+*.pem
+npm-debug.log*
+
+# env files; the templates are committed
+.env*
+!.env.example
+
+*.tsbuildinfo
+next-env.d.ts
+
+# local content, history and uploads (production keeps them in a Docker volume)
+/.data

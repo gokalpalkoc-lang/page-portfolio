@@ -1,0 +1,16 @@
+# The portfolio's site block, appended to the shared Caddyfile at
+# /opt/scout/deploy/Caddyfile (Caddy belongs to the scout project).
+# `common_headers` is defined at the top of that file.
+devtga.com {
+	encode zstd gzip
+	import common_headers
+
+	reverse_proxy portfolio-app:3000
+
+	log {
+		output file /data/portfolio-access.log {
+			roll_size 10mb
+			roll_keep 3
+		}
+	}
+}
